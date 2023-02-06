@@ -8,34 +8,30 @@ import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
 
 function App() {
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
   const [isBack, setIsBack] = useState(false);
   const [forntImg, setFrontImg] = useState("");
   const [bakcImg, setBackImg] = useState("");
   const [camera, setCamera] = useState({});
-  const videoConstraints = {
-    facingMode: { exact: "environment" },
-  };
-  // function detectDeviceType() {
-  //   var isMobile =
-  //     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-  //       navigator.userAgent
-  //     );
 
-  //   if (isMobile) {
-  //     console.log("Estás en un dispositivo móvil");
-  //     const videoConstraints = {
-  //       facingMode: "user",
-  //     };
-  //     setCamera(videoConstraints);
-  //   } else {
-  //     console.log("Estás en un PC");
-
-  //     const videoConstraints = {
-  //       facingMode: { exact: "environment" },
-  //     };
-  //     setCamera(videoConstraints);
-  //   }
-  // }
+  function detectDeviceType() {
+    if (isMobile) {
+      console.log("Estás en un dispositivo móvil");
+      const videoConstraints = {
+        facingMode: { exact: "environment" },
+      };
+      setCamera(videoConstraints);
+    } else {
+      console.log("Estás en un PC");
+      const videoConstraints = {
+        facingMode: "user",
+      };
+      setCamera(videoConstraints);
+    }
+  }
 
   const webcamRef = useRef(null);
   const capture = () => {
@@ -47,9 +43,6 @@ function App() {
       setBackImg(imageSrc);
       setIsBack(false);
     }
-
-    console.log(`front ${forntImg}`);
-    console.log(`back ${bakcImg}`);
   };
 
   return (
@@ -94,7 +87,10 @@ function App() {
           </button>
         </div>
         <div className="">
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            onClick={detectDeviceType}
+            className="btn btn-primary">
             Subir fotos de la cédula
           </button>
         </div>
