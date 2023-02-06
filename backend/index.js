@@ -1,29 +1,28 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import http from "http";
-import mongoose from "mongoose";
-import "dotenv/config";
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-mongoose.set("strictQuery", true);
+const userRoute = require("./src/routes/users.route");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 const port = process.env.PORT || 5000;
-const server = http.createServer(app);
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("MongoDB Connected");
-    server.listen(port, () => {
-      console.log(`Server is listedning on port ${port}`);
-    });
-  })
-  .catch((err) => {
-    console.log(`Error: ${err}`);
-    process.exit(1);
-  });
+// middleware
+app.use(express.json());
+app.use("/api", userRoute);
+
+// routes
+
+app.get("/", (req, res) => {
+  res.send("welcome to my api");
+});
+
+// mongoose mongoDB
+mongoose.set("strictQuery", true);
+mongoose.connect(process.env.MONGODB_URI).then(() => {
+  console.log("Conneted to MongoDB");
+});
+
+app.listen(port, () => {
+  console.log(`server listening on port ${port}`);
+});

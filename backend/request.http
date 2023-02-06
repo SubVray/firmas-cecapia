@@ -1,0 +1,11 @@
+###
+POST http://localhost:5000/api/user/register HTTP/1.1
+Content-type: application/json
+
+{
+	"phoneNumber": "123213123",
+    "numCedula": "1232343534513213",
+    "firma": "123123123123",
+    "frontImg": "123123123123",
+    "backImg": "1232133123",
+}

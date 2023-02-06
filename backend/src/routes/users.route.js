@@ -1,15 +1,6 @@
-const { Router } = require("express");
-const router = Router();
-
-const {
-  userRegister,
-  getUsers,
-  getUser,
-  updateUser,
-  deleteUser,
-  userLogin,
-  getUserData,
-} = require("../controllers/users.controllers");
+const express = require("express");
+const router = express.Router();
+const User = require("../models/Users.model");
 
 // get obtener
 // post crear
@@ -17,8 +8,19 @@ const {
 // put actualizar
 // delete borrar
 
-router.route("/user/register").post(userRegister);
-router.route("/users").get(getUsers);
-router.route("/user/:id").get(getUser);
+// create user
+router.post("/user/register", async (req, res) => {
+  const user = await User(req.body);
+  user.save().then((data) => res.json(data));
+});
 
+// get al users
+router.get("/users", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+router.get("/user/:id", async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  res.json(user);
+});
 module.exports = router;

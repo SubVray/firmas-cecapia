@@ -26,7 +26,6 @@ userControl.userRegister = async (req, res) => {
       frontImg,
       backImg,
     });
-    User.save();
     res.send({ status: "Ok" });
   } catch (error) {
     res.send({ status: "error" });
