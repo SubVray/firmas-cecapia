@@ -14,9 +14,12 @@ function App() {
     );
   const signatureCanvas = useRef(null);
   const [isBack, setIsBack] = useState(false);
-  const [forntImg, setFrontImg] = useState("");
-  const [bakcImg, setBackImg] = useState("");
+  const [frontImg, setFrontImg] = useState("");
+  const [backImg, setBackImg] = useState("");
   const [camera, setCamera] = useState();
+  const [firma, setFirma] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [numCedula, setNumCedula] = useState("");
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
@@ -39,12 +42,11 @@ function App() {
       .getTrimmedCanvas()
       .toDataURL("image/png");
     signatureCanvas.current.off();
-    // Guardar la imagen usando tu método preferido, como por ejemplo enviarla a un servidor o descargarla en el cliente
+    setFirma(signature);
   };
   const deleteFirma = () => {
     signatureCanvas.current.clear();
     signatureCanvas.current.on();
-    // Guardar la imagen usando tu método preferido, como por ejemplo enviarla a un servidor o descargarla en el cliente
   };
 
   const webcamRef = useRef(null);
@@ -86,18 +88,51 @@ function App() {
     document.getElementById("btn-camara-back").classList.add("d-none");
     document.getElementById("btn-send-photos").classList.remove("d-none");
   };
+  const handleSendCecapia = () => {
+    const user = {
+      phoneNumber: phoneNumber,
+      numCedula: numCedula,
+      firma: firma,
+      frontImg: frontImg,
+      backImg: backImg,
+    };
+    fetch("http://localhost:5000/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        console.log("Data sent");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(user);
+  };
+
+  const handleInputPhoneNumber = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+  const handleInputNumCedula = (event) => {
+    setNumCedula(event.target.value);
+  };
 
   return (
     <div className="">
-      <form
-        action=""
-        className="form-control d-flex justify-content-center align-items-center flex-column m-auto ">
+      <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto ">
         <div className="logo-container">
           <img src={logo} alt="Logo" width={"250px"} />
         </div>
-        <div className=" form-control d-flex flex-column gap-2 p-4 mt-3">
+        <div className=" form-control d-flex flex-column gap-2 p-3 mt-3">
           <label htmlFor="text-phone-number">Numero de teléfono:</label>
-          <input type="text" className="form-control" id="text-phone-number" />
+          <input
+            type="text"
+            onChange={handleInputPhoneNumber}
+            className="form-control"
+            id="text-phone-number"
+          />
           <div className=" d-flex justify-content-start align-items-center gap-1">
             <label htmlFor="text-phone-number"># Cédula:</label>
             <select name="" id="" className="form-select w-75">
@@ -106,7 +141,12 @@ function App() {
               <option value="">DIMEX</option>
             </select>
           </div>
-          <input type="text" className="form-control" id="text-cedula-number" />
+          <input
+            type="text"
+            className="form-control"
+            id="text-cedula-number"
+            onChange={handleInputNumCedula}
+          />
           <label htmlFor="sigCanvas" className="label">
             Firma:
           </label>
@@ -147,6 +187,7 @@ function App() {
             <button
               type="button"
               id="btn-send-cecapia"
+              onClick={handleSendCecapia}
               className="btn btn-primary d-none">
               Enviar a Cecapia
             </button>
@@ -159,7 +200,7 @@ function App() {
             </button>
           </div>
         </div>
-        <div id="section-cedula" className="d-none">
+        <div id="section-cedula" className="d-none mt-3">
           <div className="">
             {!isBack ? (
               <p id="lado" className="text-center h3">
@@ -194,8 +235,8 @@ function App() {
         </div>
       </form>
       <div className="my-3 d-flex gap-2">
-        <img src={forntImg} id="img1" className="w-25" alt="" />
-        <img src={bakcImg} id="img2" className="w-25" alt="" />
+        <img src={frontImg} id="img1" className="w-25" alt="" />
+        <img src={backImg} id="img2" className="w-25" alt="" />
       </div>
     </div>
   );
