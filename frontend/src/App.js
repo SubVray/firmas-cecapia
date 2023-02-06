@@ -3,6 +3,7 @@ import logo from "./cecapia.jpg";
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import Swal from "sweetalert2";
+import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
@@ -88,7 +89,7 @@ function App() {
     document.getElementById("btn-camara-back").classList.add("d-none");
     document.getElementById("btn-send-photos").classList.remove("d-none");
   };
-  const handleSendCecapia = () => {
+  const handleSendCecapia = async () => {
     const user = {
       phoneNumber: phoneNumber,
       numCedula: numCedula,
@@ -96,17 +97,11 @@ function App() {
       frontImg: frontImg,
       backImg: backImg,
     };
-    fetch("https://firmas-cecapia.vercel.app/data", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
-    console.log(user);
+    await axios
+      .post("http://localhost:5000/api/user/register", user)
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   const handleInputPhoneNumber = (event) => {

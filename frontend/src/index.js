@@ -1,16 +1,30 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+import "../src/css/styles.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { sendToVercelAnalytics } from "./vitals";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/styles.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+const routes = () => {
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
-reportWebVitals(sendToVercelAnalytics);
+  return root.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+};
+
+routes();
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
