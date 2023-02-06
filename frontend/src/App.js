@@ -71,6 +71,8 @@ function App() {
       setCompressedImage(compressedImage);
 
       if (!isBack) {
+        setFrontImg(compressedImage);
+        setIsBack(true);
         MySwal.fire({
           title: "success",
           text: "Foto frontal exitosa!",
@@ -79,11 +81,11 @@ function App() {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Entendido",
         }).then(() => {
-          setFrontImg(compressedImage);
-          setIsBack(true);
           document.getElementById("switch-button").click();
         });
       } else {
+        setIsBack(false);
+        setBackImg(compressedImage);
         Swal.fire({
           title: "success",
           text: "Foto posterior exitosa!",
@@ -92,8 +94,6 @@ function App() {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Entendido",
         }).then(() => {
-          setIsBack(false);
-          setBackImg(compressedImage);
           document.getElementById("section-cedula").classList.add("d-none");
           document.getElementById("btn-send-photos").classList.add("d-none");
           document
