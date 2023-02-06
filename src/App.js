@@ -15,7 +15,7 @@ function App() {
   const [isBack, setIsBack] = useState(false);
   const [forntImg, setFrontImg] = useState("");
   const [bakcImg, setBackImg] = useState("");
-  const [camera, setCamera] = useState({});
+  const [camera, setCamera] = useState();
 
   function detectDeviceType() {
     if (isMobile) {
@@ -111,7 +111,7 @@ function App() {
             height={350}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
-            videoConstraints={videoConstraints}
+            videoConstraints={camera}
             width={350}
           />
           <button
