@@ -100,6 +100,14 @@ function App() {
     await axios
       .post("https://firmas-cecapia-gd2z.vercel.app/api/user/register", user)
       .then((data) => {
+        MySwal.fire({
+          title: "success",
+          text: `${data}`,
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Entendido",
+        });
         console.log(data);
       });
   };
