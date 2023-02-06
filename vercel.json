@@ -1,7 +1,7 @@
 {
   "version": 2,
   "env": {
-    "MONGO_URI": "mongodb+srv://SubVray:jim123@cluster0.6puj5ox.mongodb.net/?retryWrites=true&w=majority"
+    "MONGO_URI": "@mongodb-uri"
   },
   "builds": [
     {
@@ -11,8 +11,8 @@
   ],
   "routes": [
     {
-      "src": "/data/(.*)",
-      "dest": "data/$1"
+      "src": "/api/(.*)",
+      "dest": "api/$1"
     },
     {
       "src": "/(.*)",
