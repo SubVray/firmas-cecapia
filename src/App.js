@@ -11,6 +11,30 @@ function App() {
   const [isBack, setIsBack] = useState(false);
   const [forntImg, setFrontImg] = useState("");
   const [bakcImg, setBackImg] = useState("");
+  const [camera, setCamera] = useState({});
+
+  function detectDeviceType() {
+    var isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+
+    if (isMobile) {
+      console.log("Estás en un dispositivo móvil");
+
+      const videoConstraints = {
+        facingMode: { exact: "environment" },
+      };
+      setCamera(videoConstraints);
+    } else {
+      console.log("Estás en un PC");
+
+      const videoConstraints = {
+        facingMode: { exact: "environment" },
+      };
+      setCamera(videoConstraints);
+    }
+  }
 
   const webcamRef = useRef(null);
   const capture = () => {
@@ -89,7 +113,9 @@ function App() {
             audio={false}
             height={350}
             ref={webcamRef}
+            mirrored={true}
             screenshotFormat="image/jpeg"
+            videoConstraints={camera}
             width={350}
           />
           <button
