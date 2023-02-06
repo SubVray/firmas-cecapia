@@ -1,22 +1,22 @@
 {
   "version": 2,
-  "env": {
-    "MONGO_URI": "@mongodb-uri"
-  },
   "builds": [
     {
-      "src": "package.json",
-      "use": "@now/node-server"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "api/$1"
+      "src": "./backend/server.js", 
+      "use": "@vercel/node"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "src": "./frontend/public", 
+      "use": "@vercel/node"
+    }
+  ],
+
+
+
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/backend/server.js"
     }
   ]
 }
