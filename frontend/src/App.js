@@ -109,7 +109,16 @@ function App() {
           confirmButtonText: "Entendido",
         });
         console.log(data);
-      });
+      }).catch((err) => { 
+        MySwal.fire({
+          title: "success",
+          text: `${err}`,
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Entendido",
+        });
+      })
   };
 
   const handleInputPhoneNumber = (event) => {
