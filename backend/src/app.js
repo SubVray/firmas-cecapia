@@ -10,9 +10,6 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.use(
-  "firmas-cecapia-backend.vercel.app/api",
-  require("./routes/users.route")
-);
+app.use("/api",require("./routes/users.route"));
 
 module.exports = app;

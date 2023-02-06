@@ -9,7 +9,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const routes = () => {
   const root = ReactDOM.createRoot(document.getElementById("root"));
-  const user = JSON.parse(localStorage.getItem("user"));
 
   return root.render(
     <React.StrictMode>
