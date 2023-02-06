@@ -3,6 +3,6 @@
   "builds": [{ "src": "*.js", "use": "@vercel/node" }],
   "env": {
     "NODE_ENV": "production",
-    "MONGODB_URI": "@mongodb-uri"
+    "MONGODB_URI": "mongodb+srv://SubVray:jim123@cluster0.6puj5ox.mongodb.net/?retryWrites=true&w=majority"
   }
 }

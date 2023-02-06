@@ -96,19 +96,16 @@ function App() {
       frontImg: frontImg,
       backImg: backImg,
     };
-    fetch("http://localhost:5000/data", {
+    fetch("https://firmas-cecapia.vercel.app/data", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     })
-      .then((response) => {
-        console.log("Data sent");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
     console.log(user);
   };
 
