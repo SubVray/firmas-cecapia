@@ -23,7 +23,7 @@ function App() {
       console.log("Estás en un dispositivo móvil");
 
       const videoConstraints = {
-        facingMode: { exact: "environment" },
+        facingMode: "user",
       };
       setCamera(videoConstraints);
     } else {
