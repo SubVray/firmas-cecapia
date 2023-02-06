@@ -2,21 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "./backend/server.js", 
-      "use": "@vercel/node"
+      "src": "./backend/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "env": {
+          "MONGO_URI": "mongodb+srv://SubVray:jim123@cluster0.6puj5ox.mongodb.net/?retryWrites=true&w=majority"
+        }
+      }
     },
     {
-      "src": "./frontend/public", 
-      "use": "@vercel/node"
+      "src": "./frontend/public",
+      "use": "@vercel/static"
     }
   ],
-
-
-
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/backend/server.js"
+  "env": {
+    "mongo-uri": {
+      "src": "mongodb+srv://SubVray:jim123@cluster0.6puj5ox.mongodb.net/?retryWrites=true&w=majority",
+      "secure": true
     }
-  ]
+  }
 }
