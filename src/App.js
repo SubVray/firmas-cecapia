@@ -93,7 +93,10 @@ function App() {
           </button>
         </div>
         <div className="">
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            onClick={detectDeviceType}
+            className="btn btn-primary">
             Subir fotos de la cédula
           </button>
         </div>
