@@ -250,6 +250,7 @@ function App() {
               screenshotFormat="image/jpeg"
               videoConstraints={camera}
               width={350}
+              onTakePhoto={(dataUri) => capture(dataUri)}
             />
             <button
               type="button"
