@@ -22,6 +22,7 @@ function App() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
   const [compressedImage, setCompressedImage] = useState(null);
+
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
     if (isMobile) {
@@ -68,38 +69,40 @@ function App() {
       const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
 
       setCompressedImage(compressedImage);
-    };
 
-    if (!isBack) {
-      MySwal.fire({
-        title: "success",
-        text: "Foto frontal exitosa!",
-        icon: "success",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Entendido",
-      }).then(() => {
-        setFrontImg(compressedImage);
-        setIsBack(true);
-        document.getElementById("switch-button").click();
-      });
-    } else {
-      Swal.fire({
-        title: "success",
-        text: "Foto posterior exitosa!",
-        icon: "success",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Entendido",
-      }).then(() => {
-        setIsBack(false);
-        setBackImg(compressedImage);
-        document.getElementById("section-cedula").classList.add("d-none");
-        document.getElementById("btn-send-photos").classList.add("d-none");
-        document.getElementById("btn-send-cecapia").classList.remove("d-none");
-        document.getElementById("btn-camara-back").classList.remove("d-none");
-      });
-    }
+      if (!isBack) {
+        MySwal.fire({
+          title: "success",
+          text: "Foto frontal exitosa!",
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Entendido",
+        }).then(() => {
+          setFrontImg(compressedImage);
+          setIsBack(true);
+          document.getElementById("switch-button").click();
+        });
+      } else {
+        Swal.fire({
+          title: "success",
+          text: "Foto posterior exitosa!",
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Entendido",
+        }).then(() => {
+          setIsBack(false);
+          setBackImg(compressedImage);
+          document.getElementById("section-cedula").classList.add("d-none");
+          document.getElementById("btn-send-photos").classList.add("d-none");
+          document
+            .getElementById("btn-send-cecapia")
+            .classList.remove("d-none");
+          document.getElementById("btn-camara-back").classList.remove("d-none");
+        });
+      }
+    };
   };
   const handleCamBack = () => {
     document.getElementById("btn-send-cecapia").classList.add("d-none");
