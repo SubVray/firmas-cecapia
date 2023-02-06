@@ -12,29 +12,30 @@ function App() {
   const [forntImg, setFrontImg] = useState("");
   const [bakcImg, setBackImg] = useState("");
   const [camera, setCamera] = useState({});
+ const videoConstraints = {
+   facingMode: "user",
+ };
+  // function detectDeviceType() {
+  //   var isMobile =
+  //     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  //       navigator.userAgent
+  //     );
 
-  function detectDeviceType() {
-    var isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
+  //   if (isMobile) {
+  //     console.log("Estás en un dispositivo móvil");
+  //     const videoConstraints = {
+  //       facingMode: "user",
+  //     };
+  //     setCamera(videoConstraints);
+  //   } else {
+  //     console.log("Estás en un PC");
 
-    if (isMobile) {
-      console.log("Estás en un dispositivo móvil");
-
-      const videoConstraints = {
-        facingMode: "user",
-      };
-      setCamera(videoConstraints);
-    } else {
-      console.log("Estás en un PC");
-
-      const videoConstraints = {
-        facingMode: { exact: "environment" },
-      };
-      setCamera(videoConstraints);
-    }
-  }
+  //     const videoConstraints = {
+  //       facingMode: { exact: "environment" },
+  //     };
+  //     setCamera(videoConstraints);
+  //   }
+  // }
 
   const webcamRef = useRef(null);
   const capture = () => {
@@ -95,7 +96,7 @@ function App() {
         <div className="">
           <button
             type="button"
-            onClick={detectDeviceType}
+            onClick={}
             className="btn btn-primary">
             Subir fotos de la cédula
           </button>
@@ -116,9 +117,8 @@ function App() {
             audio={false}
             height={350}
             ref={webcamRef}
-            mirrored={true}
             screenshotFormat="image/jpeg"
-            videoConstraints={camera}
+            videoConstraints={videoConstraints}
             width={350}
           />
           <button
