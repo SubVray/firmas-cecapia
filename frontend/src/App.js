@@ -56,22 +56,21 @@ function App() {
     const image = new Image();
     image.src = imageSrc;
 
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      ctx.drawImage(image, 0, 0);
+
+      // Obtener la imagen comprimida como una URL de datos
+      const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
+
+      setCompressedImage(compressedImage);
+    };
+
     if (!isBack) {
-      image.onload = () => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = image.naturalWidth;
-        canvas.height = image.naturalHeight;
-        ctx.drawImage(image, 0, 0);
-
-        // Obtener la imagen comprimida como una URL de datos
-        const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
-
-        setCompressedImage(compressedImage);
-      };
-      setFrontImg(compressedImage);
-      setIsBack(true);
       MySwal.fire({
         title: "success",
         text: "Foto frontal exitosa!",
@@ -80,24 +79,11 @@ function App() {
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Entendido",
       }).then(() => {
+        setFrontImg(compressedImage);
+        setIsBack(true);
         document.getElementById("switch-button").click();
       });
     } else {
-      image.onload = () => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = image.naturalWidth;
-        canvas.height = image.naturalHeight;
-        ctx.drawImage(image, 0, 0);
-
-        // Obtener la imagen comprimida como una URL de datos
-        const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
-
-        setCompressedImage(compressedImage);
-      };
-      setBackImg(compressedImage);
-      setIsBack(false);
       Swal.fire({
         title: "success",
         text: "Foto posterior exitosa!",
@@ -106,6 +92,8 @@ function App() {
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Entendido",
       }).then(() => {
+        setIsBack(false);
+        setBackImg(compressedImage);
         document.getElementById("section-cedula").classList.add("d-none");
         document.getElementById("btn-send-photos").classList.add("d-none");
         document.getElementById("btn-send-cecapia").classList.remove("d-none");
