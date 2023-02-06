@@ -56,21 +56,20 @@ function App() {
     const image = new Image();
     image.src = imageSrc;
 
-    image.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-      ctx.drawImage(image, 0, 0);
-
-      // Obtener la imagen comprimida como una URL de datos
-      const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
-
-      setCompressedImage(compressedImage);
-    };
-
     if (!isBack) {
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        ctx.drawImage(image, 0, 0);
+
+        // Obtener la imagen comprimida como una URL de datos
+        const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
+
+        setCompressedImage(compressedImage);
+      };
       setFrontImg(compressedImage);
       setIsBack(true);
       MySwal.fire({
@@ -84,6 +83,19 @@ function App() {
         document.getElementById("switch-button").click();
       });
     } else {
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        ctx.drawImage(image, 0, 0);
+
+        // Obtener la imagen comprimida como una URL de datos
+        const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
+
+        setCompressedImage(compressedImage);
+      };
       setBackImg(compressedImage);
       setIsBack(false);
       Swal.fire({
