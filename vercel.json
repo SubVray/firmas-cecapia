@@ -1,20 +1,22 @@
 {
   "version": 2,
+  "env": {
+    "MONGO_URI": "mongodb+srv://SubVray:jim123@cluster0.6puj5ox.mongodb.net/?retryWrites=true&w=majority"
+  },
   "builds": [
     {
-      "src": "./backend/server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "./frontend/build",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@now/node-server"
     }
   ],
-
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/backend/server.js"
+      "src": "/data/(.*)",
+      "dest": "data/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
