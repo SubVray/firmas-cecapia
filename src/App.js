@@ -1,6 +1,6 @@
 import SignatureCanvas from "react-signature-canvas";
 import logo from "./cecapia.jpg";
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
