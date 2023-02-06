@@ -21,7 +21,7 @@ function App() {
   const [firma, setFirma] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
-
+  const [compressedImage, setCompressedImage] = useState(null);
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
     if (isMobile) {
@@ -53,8 +53,25 @@ function App() {
   const webcamRef = useRef(null);
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
+    const image = new Image();
+    image.src = imageSrc;
+
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      ctx.drawImage(image, 0, 0);
+
+      // Obtener la imagen comprimida como una URL de datos
+      const compressedImage = canvas.toDataURL("image/jpeg", 0.1);
+
+      setCompressedImage(compressedImage);
+    };
+
     if (!isBack) {
-      setFrontImg(imageSrc);
+      setFrontImg(compressedImage);
       setIsBack(true);
       MySwal.fire({
         title: "success",
@@ -67,7 +84,7 @@ function App() {
         document.getElementById("switch-button").click();
       });
     } else {
-      setBackImg(imageSrc);
+      setBackImg(compressedImage);
       setIsBack(false);
       Swal.fire({
         title: "success",
@@ -109,16 +126,17 @@ function App() {
           confirmButtonText: "Entendido",
         });
         console.log(data);
-      }).catch((err) => { 
+      })
+      .catch((err) => {
         MySwal.fire({
-          title: "success",
+          title: "error",
           text: `${err}`,
           icon: "success",
           showCancelButton: false,
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Entendido",
         });
-      })
+      });
   };
 
   const handleInputPhoneNumber = (event) => {
