@@ -18,6 +18,7 @@ function App() {
   const [camera, setCamera] = useState();
 
   function detectDeviceType() {
+    document.getElementById("section-cedula").classList.toggle("d-none");
     if (isMobile) {
       console.log("Estás en un dispositivo móvil");
       const videoConstraints = {
@@ -94,41 +95,43 @@ function App() {
             Subir fotos de la cédula
           </button>
         </div>
-        <div className="">
-          {!isBack ? (
-            <p id="lado" className="text-center h3">
-              Frontal de la cédula
-            </p>
-          ) : (
-            <p id="lado" className="text-center h3">
-              Posterior de la cédula
-            </p>
-          )}
-        </div>
-        <div id="camera-box">
-          <Webcam
-            audio={false}
-            height={350}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={camera}
-            width={350}
-          />
-          <button
-            type="button"
-            id="capture-button"
-            className="btn btn-capture"
-            onClick={capture}>
-            Tomar Foto
+        <div id="section-cedula" className="d-none">
+          <div className="">
+            {!isBack ? (
+              <p id="lado" className="text-center h3">
+                Frontal de la cédula
+              </p>
+            ) : (
+              <p id="lado" className="text-center h3">
+                Posterior de la cédula
+              </p>
+            )}
+          </div>
+          <div id="camera-box">
+            <Webcam
+              audio={false}
+              height={350}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              videoConstraints={camera}
+              width={350}
+            />
+            <button
+              type="button"
+              id="capture-button"
+              className="btn btn-capture"
+              onClick={capture}>
+              Tomar Foto
+            </button>
+          </div>
+          <button type="button" id="switch-button" className="opacity-0">
+            Cambiar a la parte posterior de la cédula
           </button>
         </div>
-        <button type="button" id="switch-button" className="opacity-0">
-          Cambiar a la parte posterior de la cédula
-        </button>
       </form>
       <div className="my-3">
-        <img src="#" id="img1" className="w-25" alt="" />
-        <img src="#" id="img2" className="w-25" alt="" />
+        <img src={forntImg} id="img1" className="w-25" alt="" />
+        <img src={bakcImg} id="img2" className="w-25" alt="" />
       </div>
     </div>
   );
