@@ -96,7 +96,6 @@ function App() {
         <div className="">
           <button
             type="button"
-            onClick={}
             className="btn btn-primary">
             Subir fotos de la cédula
           </button>
