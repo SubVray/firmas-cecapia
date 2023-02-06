@@ -15,6 +15,16 @@
       "use": "@vercel/static"
     }
   ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/public/index.html"
+    }
+  ],
   "env": {
     "mongo-uri": {
       "src": "mongodb+srv://SubVray:jim123@cluster0.6puj5ox.mongodb.net/?retryWrites=true&w=majority",
