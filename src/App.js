@@ -12,9 +12,9 @@ function App() {
   const [forntImg, setFrontImg] = useState("");
   const [bakcImg, setBackImg] = useState("");
   const [camera, setCamera] = useState({});
- const videoConstraints = {
-   facingMode: "user",
- };
+  const videoConstraints = {
+    facingMode: { exact: "environment" },
+  };
   // function detectDeviceType() {
   //   var isMobile =
   //     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -94,9 +94,7 @@ function App() {
           </button>
         </div>
         <div className="">
-          <button
-            type="button"
-            className="btn btn-primary">
+          <button type="button" className="btn btn-primary">
             Subir fotos de la cédula
           </button>
         </div>
