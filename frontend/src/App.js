@@ -25,11 +25,11 @@ function App() {
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
+    const videoConstraints = {
+      facingMode: { exact: "environment" },
+    };
     if (isMobile) {
       console.log("Estás en un dispositivo móvil");
-      const videoConstraints = {
-        facingMode: { exact: "environment" },
-      };
       setCamera(videoConstraints);
     } else {
       console.log("Estás en un PC");
@@ -61,12 +61,12 @@ function App() {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-      ctx.drawImage(image, 0, 0);
+      canvas.width = 350;
+      canvas.height = 250;
+      ctx.drawImage(image, 0, 0,350,250);
 
       // Obtener la imagen comprimida como una URL de datos
-      const compressedImage = canvas.toDataURL("image/jpeg", 0.5);
+      const compressedImage = canvas.toDataURL("image/jpeg", 1);
 
       setCompressedImage(compressedImage);
 

@@ -18,7 +18,7 @@ video {
   border-radius: 12px;
   display: block;
   height: 250px;
-  max-width: 500px;
+  max-width: 350px;
   object-fit: cover;
 }
 #camera-box {
