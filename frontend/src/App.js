@@ -98,7 +98,7 @@ function App() {
       backImg: backImg,
     };
     await axios
-      .post("https://firmas-cecapia-zv22.vercel.app//api/user/register", user)
+      .post("https://firmas-cecapia-zv22.vercel.app/api/user/register", user)
       .then((data) => {
         console.log(data);
       });
