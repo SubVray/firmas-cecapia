@@ -30,8 +30,11 @@ const Data = mongoose.model("Data", dataSchema);
 // Define an endpoint for saving data to MongoDB
 app.post("/data", (req, res) => {
   const newData = new Data({
-    key: req.body.key,
-    value: req.body.value,
+    phoneNumber: req.body.key,
+    numCedula: req.body.value,
+    firma: req.body.value,
+    frontImg: req.body.value,
+    backImg: req.body.value,
   });
 
   newData
