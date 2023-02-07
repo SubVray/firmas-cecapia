@@ -76,7 +76,7 @@ function App() {
       ctx.drawImage(image, 0, 0);
 
       // Obtener la imagen comprimida como una URL de datos
-      const compressedImage = canvas.toDataURL("image/jpeg", 0.7);
+      const compressedImage = canvas.toDataURL("image/jpeg", 1);
 
       if (!isBack) {
         setPhotoAdd(compressedImage);
