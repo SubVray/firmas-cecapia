@@ -40,11 +40,11 @@ function App() {
 
   window.addEventListener("load", function () {});
 
-  if (stateModal === true) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  // if (stateModal === true) {
+  //   document.body.style.overflow = "hidden";
+  // } else {
+  //   document.body.style.overflow = "auto";
+  // }
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
