@@ -52,19 +52,19 @@ function App() {
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
 
-    if (isMobile) {
-      console.log("Estás en un dispositivo móvil");
-      setCamera(videoConstraints);
-    } else {
-      console.log("Estás en un PC");
-      const videoConstraints = {
-        width: 1280,
-        height: 720,
-        facingMode: "user",
-      };
+    // if (isMobile) {
+    //   console.log("Estás en un dispositivo móvil");
+    //   setCamera(videoConstraints);
+    // } else {
+    //   console.log("Estás en un PC");
+    //   const videoConstraints = {
+    //     width: 1280,
+    //     height: 720,
+    //     facingMode: "user",
+    //   };
 
-      setCamera(videoConstraints);
-    }
+    //   setCamera(videoConstraints);
+    // }
   }
 
   const saveImage = () => {
@@ -437,7 +437,7 @@ function App() {
 
       {stateModal && (
         <div className="overlay">
-          <div className="modal-container">
+          <div className="modal-container ">
             <div className="modal-header">
               <h3>Recortar foto de la Cedula</h3>
             </div>
