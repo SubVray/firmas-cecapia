@@ -64,7 +64,6 @@ label {
   height: 100vh;
   justify-content: center;
   left: 0;
-  padding: 40px;
   position: fixed;
   top: 0;
   width: 100vw;
@@ -75,10 +74,11 @@ label {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  max-width: 500px;
+  display: block;
+  max-width: 450px;
   min-height: 100px;
   min-width: 320px;
-  padding: 20px;
+  padding: 20px 10px;
   position: relative;
   width: 100%;
 }
@@ -98,21 +98,21 @@ label {
 }
 
 .btn-close-modal {
+  align-items: center;
+  background: none repeat;
   border: none;
+  border-radius: 5px;
+  box-shadow: none;
+  cursor: pointer;
+  display: flex;
   font-weight: bolder;
   height: 30px;
+  justify-content: center;
   position: absolute;
   right: 20px;
   top: 15px;
-  width: 30px;
-  background: none repeat;
-  box-shadow: none;
-  cursor: pointer;
   transition: 0.3s ease all;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 30px;
 }
 .btn-close-modal span {
   transition: 0.3s ease all;
@@ -126,10 +126,10 @@ label {
 }
 
 .modal-body {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 .modal-body p {
   color: #1766dc;
