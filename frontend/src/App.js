@@ -1,10 +1,13 @@
 import SignatureCanvas from "react-signature-canvas";
 import logo from "./cecapia.jpg";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import Swal from "sweetalert2";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
+
+import ReactDOM from "react-dom";
+import Cropper from "react-easy-crop";
 
 const MySwal = withReactContent(Swal);
 
@@ -21,7 +24,11 @@ function App() {
   const [firma, setFirma] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
-  const [compressedImage, setCompressedImage] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    console.log(croppedArea, croppedAreaPixels);
+  }, []);
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
@@ -63,12 +70,10 @@ function App() {
 
       canvas.width = 350;
       canvas.height = 250;
-      ctx.drawImage(image, 0, 0,350,250);
+      ctx.drawImage(image, 0, 0, 350, 250);
 
       // Obtener la imagen comprimida como una URL de datos
       const compressedImage = canvas.toDataURL("image/jpeg", 1);
-
-      setCompressedImage(compressedImage);
 
       if (!isBack) {
         setFrontImg(compressedImage);
@@ -268,6 +273,33 @@ function App() {
       <div className="my-3 d-flex gap-2">
         <img src={frontImg} id="img1" className="w-25" alt="" />
         <img src={backImg} id="img2" className="w-25" alt="" />
+      </div>
+      <div className="border f">
+        <div className="crop-container">
+          <Cropper
+            image={frontImg}
+            crop={crop}
+            zoom={zoom}
+            aspect={5 / 3}
+            onCropChange={setCrop}
+            onCropComplete={onCropComplete}
+            onZoomChange={setZoom}
+          />
+        </div>
+        <div className="controls">
+          <input
+            type="range"
+            value={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            onChange={(e) => {
+              setZoom(e.target.value);
+            }}
+            className="zoom-range"
+          />
+        </div>
       </div>
     </div>
   );
