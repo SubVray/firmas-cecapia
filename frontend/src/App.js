@@ -68,12 +68,12 @@ function App() {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      canvas.width = 350;
-      canvas.height = 250;
-      ctx.drawImage(image, 0, 0, 350, 250);
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      ctx.drawImage(image, 0, 0);
 
       // Obtener la imagen comprimida como una URL de datos
-      const compressedImage = canvas.toDataURL("image/jpeg", 1);
+      const compressedImage = canvas.toDataURL("image/jpeg", 0.7);
 
       if (!isBack) {
         setFrontImg(compressedImage);
