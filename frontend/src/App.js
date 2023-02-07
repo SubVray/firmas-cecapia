@@ -29,6 +29,7 @@ function App() {
   const [stateModal, setStateModal] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
   const [photoAdd, setPhotoAdd] = useState("");
+  const [tipoId, setTipoId] = useState(null);
 
   window.addEventListener("load", function () {});
 
@@ -175,9 +176,6 @@ function App() {
   const handleInputPhoneNumber = (event) => {
     setPhoneNumber(event.target.value);
   };
-  const handleInputNumCedula = (event) => {
-    setNumCedula(event.target.value);
-  };
 
   const handleRecortar = async () => {
     const canvas = document.createElement("canvas");
@@ -212,9 +210,26 @@ function App() {
       setStateModal(false);
     }
   };
+
+  const handleInputNumCedula = (event) => {
+    setNumCedula(event.target.value);
+    if (numCedula.length === 9) {
+      document.activeElement.blur();
+    }
+  };
+  const handleChange = (event) => {
+    if (event.target.value === "nacional") {
+      console.log("nacional");
+      const cedulaNum = document.getElementById("text-cedula-number");
+      cedulaNum.placeholder = "0-0000-0000";
+    } else {
+      console.log("dimex");
+    }
+  };
+
   return (
     <div className="">
-      <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto ">
+      <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto mt-3 pt-3 ">
         <div className="logo-container">
           <img src={logo} alt="Logo" width={"250px"} />
         </div>
@@ -227,10 +242,18 @@ function App() {
             id="text-phone-number"
           />
           <div className=" d-flex justify-content-start align-items-center gap-1">
-            <label htmlFor="text-phone-number"># Cédula:</label>
-            <select name="" id="" className="form-select w-75">
-              <option value="">Cédula de identidad</option>
-              <option value="">DIMEX</option>
+            <label htmlFor="text-id-number"># Cédula:</label>
+            <select
+              name="cedula"
+              value={tipoId}
+              id="tipo-id"
+              className="form-select w-60"
+              onChange={handleChange}>
+              <option value="" disabled selected>
+                Tipo de Cédula
+              </option>
+              <option value="nacional">Cédula de identidad</option>
+              <option value="dimex">DIMEX</option>
             </select>
           </div>
           <input
@@ -250,7 +273,7 @@ function App() {
             <div className="overlay2">
               <div className="modal-container2">
                 <div className="modal-header2">
-                  <h3>Recortar foto de la Cedula</h3>
+                  <h3>Firma</h3>
                 </div>
                 <button
                   type="button"
@@ -262,9 +285,6 @@ function App() {
                 </button>
                 <div className="modal-body2">
                   <div className="sigCanvas-container">
-                    <label htmlFor="sigCanvas" className="label">
-                      Firma:
-                    </label>
                     <SignatureCanvas
                       penColor="blue"
                       ref={signatureCanvas}
@@ -292,7 +312,6 @@ function App() {
               </div>
             </div>
           )}
-          
         </div>
         <div className="">
           <button

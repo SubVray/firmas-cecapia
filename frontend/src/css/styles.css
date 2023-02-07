@@ -1,4 +1,3 @@
-
 .form-signature {
   max-width: 600px;
 }
@@ -7,9 +6,9 @@
   width: 100%;
 }
 .sigCanvas-container {
-  border: 1px solid red;
   height: 300px;
   width: 100%;
+  padding: 0 5px;
 }
 #root {
   max-width: 600px;
@@ -26,6 +25,9 @@ video {
 }
 #camera-box {
   position: relative;
+}
+.w-60{
+  width: 60%;
 }
 
 #capture-button {
