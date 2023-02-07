@@ -27,12 +27,22 @@ function App() {
   const [numCedula, setNumCedula] = useState("");
   const [crop, setCrop] = useState({ aspect: 16 / 9 });
   const [stateModal, setStateModal] = useState(false);
+  const [stateModal2, setStateModal2] = useState(false);
   const [photoAdd, setPhotoAdd] = useState("");
+
+  window.addEventListener("load", function () {});
+
   if (stateModal === true) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "auto";
   }
+  if (stateModal2 === true) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
     const videoConstraints = {
@@ -55,6 +65,15 @@ function App() {
       .toDataURL("image/png");
     signatureCanvas.current.off();
     setFirma(signature);
+    setStateModal2(false);
+    MySwal.fire({
+      title: "Firma guardada exitosamente",
+      text: `Si desea volver hacer la firma precione el boton de firmar`,
+      icon: "success",
+      showCancelButton: false,
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+    });
   };
   const deleteFirma = () => {
     signatureCanvas.current.clear();
@@ -113,6 +132,7 @@ function App() {
     };
   };
   const handleCamBack = () => {
+    setStateModal(false);
     document.getElementById("btn-send-cecapia").classList.add("d-none");
     document.getElementById("btn-camara-back").classList.add("d-none");
     document.getElementById("btn-send-photos").classList.remove("d-none");
@@ -126,6 +146,7 @@ function App() {
       frontImg: frontImg,
       backImg: backImg,
     };
+    console.log(user);
     await axios
       .post("https://firmas-cecapia-gd2z.vercel.app/api/user/register", user)
       .then((data) => {
@@ -186,6 +207,7 @@ function App() {
       setStateModal(false);
       setIsBack(true);
     } else {
+      setIsBack(false);
       setBackImg(base64Image);
       setStateModal(false);
     }
@@ -196,7 +218,7 @@ function App() {
         <div className="logo-container">
           <img src={logo} alt="Logo" width={"250px"} />
         </div>
-        <div className=" form-control d-flex flex-column gap-2 p-3 mt-3">
+        <div className=" form-control d-flex flex-column gap-2 py-4  mt-3">
           <label htmlFor="text-phone-number">Numero de teléfono:</label>
           <input
             type="text"
@@ -208,7 +230,6 @@ function App() {
             <label htmlFor="text-phone-number"># Cédula:</label>
             <select name="" id="" className="form-select w-75">
               <option value="">Cédula de identidad</option>
-              <option value="">Cédulas jurídicas</option>
               <option value="">DIMEX</option>
             </select>
           </div>
@@ -218,33 +239,60 @@ function App() {
             id="text-cedula-number"
             onChange={handleInputNumCedula}
           />
-          <label htmlFor="sigCanvas" className="label">
-            Firma:
-          </label>
-          <SignatureCanvas
-            penColor="blue"
-            ref={signatureCanvas}
-            canvasProps={{
-              maxwidth: 300,
-              height: 300,
-              className: "border sigCanvas",
-              id: "sigCanvas",
-            }}
-          />
-        </div>
-        <div className="d-flex gap-2 my-2">
           <button
             type="button"
-            onClick={saveImage}
-            className="btn btn-success text-center">
-            Guardar
+            className="btn btn-warning"
+            onClick={() => setStateModal2(true)}>
+            Firmar
           </button>
-          <button
-            type="button"
-            onClick={deleteFirma}
-            className="btn btn-danger text-center">
-            Borrar
-          </button>
+          {/* modal firma */}
+          {stateModal2 && (
+            <div className="overlay2">
+              <div className="modal-container2">
+                <div className="modal-header2">
+                  <h3>Recortar foto de la Cedula</h3>
+                </div>
+                <button
+                  type="button"
+                  className="btn-close-modal2"
+                  onClick={() => {
+                    setStateModal2(false);
+                  }}>
+                  <span>❌</span>
+                </button>
+                <div className="modal-body2">
+                  <div className="sigCanvas-container">
+                    <label htmlFor="sigCanvas" className="label">
+                      Firma:
+                    </label>
+                    <SignatureCanvas
+                      penColor="blue"
+                      ref={signatureCanvas}
+                      canvasProps={{
+                        className: "border sigCanvas",
+                        id: "sigCanvas",
+                      }}
+                    />
+                  </div>
+                  <div className="d-flex gap-2 my-2">
+                    <button
+                      type="button"
+                      onClick={saveImage}
+                      className="btn btn-success text-center">
+                      Guardar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={deleteFirma}
+                      className="btn btn-danger text-center">
+                      Borrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
         </div>
         <div className="">
           <button
@@ -275,11 +323,11 @@ function App() {
           <div className="">
             {!isBack ? (
               <p id="lado" className="text-center h3">
-                Frontal de la cédula
+                Foto frontal
               </p>
             ) : (
               <p id="lado" className="text-center h3">
-                Posterior de la cédula
+                Foto Trasera
               </p>
             )}
           </div>
