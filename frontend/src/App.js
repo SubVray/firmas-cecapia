@@ -13,8 +13,6 @@ import "react-image-crop/dist/ReactCrop.css";
 const MySwal = withReactContent(Swal);
 
 function App() {
-
-
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -30,11 +28,10 @@ function App() {
   const [crop, setCrop] = useState({ aspect: 16 / 9 });
   const [stateModal, setStateModal] = useState(false);
   const [photoAdd, setPhotoAdd] = useState("");
-
-
-
-  if(stateModal === true) {
+  if (stateModal === true) {
     document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
   }
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
@@ -82,9 +79,7 @@ function App() {
       const compressedImage = canvas.toDataURL("image/jpeg", 0.7);
 
       if (!isBack) {
-        setFrontImg(compressedImage);
         setPhotoAdd(compressedImage);
-        setIsBack(true);
         MySwal.fire({
           title: "success",
           text: "Foto frontal exitosa!",
@@ -97,8 +92,6 @@ function App() {
           document.getElementById("switch-button").click();
         });
       } else {
-        setIsBack(false);
-        setBackImg(compressedImage);
         setPhotoAdd(compressedImage);
         Swal.fire({
           title: "success",
@@ -165,6 +158,38 @@ function App() {
     setNumCedula(event.target.value);
   };
 
+  const handleRecortar = async () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+
+    const image = new Image();
+    image.src = photoAdd;
+    ctx.drawImage(
+      image,
+      crop.x,
+      crop.y,
+      crop.width,
+      crop.height,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    const base64Image = await canvas.toDataURL("image/jpeg");
+    console.log(base64Image);
+    console.log(isBack);
+    if (!isBack) {
+      setFrontImg(base64Image);
+      setStateModal(false);
+      setIsBack(true);
+    } else {
+      setBackImg(base64Image);
+      setStateModal(false);
+    }
+  };
   return (
     <div className="">
       <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto ">
@@ -309,7 +334,12 @@ function App() {
                   />
                 </ReactCrop>
               </div>
-
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleRecortar}>
+                Recortar
+              </button>
             </div>
           </div>
         </div>
