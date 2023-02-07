@@ -17,6 +17,7 @@ function App() {
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
+  const webcamRef = useRef(null);
   const signatureCanvas = useRef(null);
   const [isBack, setIsBack] = useState(false);
   const [frontImg, setFrontImg] = useState("");
@@ -30,6 +31,7 @@ function App() {
   const [stateModal2, setStateModal2] = useState(false);
   const [photoAdd, setPhotoAdd] = useState("");
   const [tipoId, setTipoId] = useState(null);
+  const [formatId, setFormatId] = useState(false);
 
   window.addEventListener("load", function () {});
 
@@ -69,7 +71,7 @@ function App() {
     setStateModal2(false);
     MySwal.fire({
       title: "Firma guardada exitosamente",
-      text: `Si desea volver hacer la firma precione el boton de firmar`,
+      text: `Si desea volver hacer la firma presione el boton de firmar nuevamente.`,
       icon: "success",
       showCancelButton: false,
       confirmButtonColor: "#3085d6",
@@ -81,7 +83,6 @@ function App() {
     signatureCanvas.current.on();
   };
 
-  const webcamRef = useRef(null);
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const image = new Image();
@@ -198,8 +199,6 @@ function App() {
     );
 
     const base64Image = await canvas.toDataURL("image/jpeg");
-    console.log(base64Image);
-    console.log(isBack);
     if (!isBack) {
       setFrontImg(base64Image);
       setStateModal(false);
@@ -212,18 +211,66 @@ function App() {
   };
 
   const handleInputNumCedula = (event) => {
-    setNumCedula(event.target.value);
-    if (numCedula.length === 9) {
-      document.activeElement.blur();
+    if (tipoId === "nacional") {
+      let value = event.target.value;
+      value = value.replace(/[^\d]/g, "");
+      if (value.length > 5) {
+        value = value.slice(0, 5) + "-" + value.slice(5);
+      }
+      if (value.length > 1) {
+        value = value.slice(0, 1) + "-" + value.slice(1);
+      }
+      setNumCedula(value);
+      if (numCedula.length === 10) {
+        document.activeElement.blur();
+        setFormatId(true);
+      }
+    } else if (tipoId === "dimex") {
+      let value = event.target.value;
+      value = value.replace(/[^\d]/g, "");
+      if (value.length > 4) {
+        value = value.slice(0, 4) + "-" + value.slice(4);
+      }
+      setNumCedula(value);
+      if (numCedula.length === 12) {
+        document.activeElement.blur();
+        setFormatId(true);
+      } else {
+        setFormatId(false);
+      }
+    } else if (tipoId === "permiso") {
+      let value = event.target.value;
+      value = value.replace(/[^\d]/g, "");
+      if (value.length > 4) {
+        value = value.slice(0, 4) + "-" + value.slice(4);
+      }
+      setNumCedula(value);
+      if (numCedula.length === 12) {
+        document.activeElement.blur();
+        setFormatId(true);
+      } else {
+        setFormatId(false);
+      }
     }
   };
+
   const handleChange = (event) => {
+    const cedulaNum = document.getElementById("text-cedula-number");
     if (event.target.value === "nacional") {
-      console.log("nacional");
-      const cedulaNum = document.getElementById("text-cedula-number");
+      cedulaNum.disabled = false;
+      setTipoId("nacional");
+      setNumCedula("");
       cedulaNum.placeholder = "0-0000-0000";
-    } else {
-      console.log("dimex");
+    } else if (event.target.value === "dimex") {
+      cedulaNum.disabled = false;
+      setTipoId("dimex");
+      setNumCedula("");
+      cedulaNum.placeholder = "0000-00000000";
+    } else if (event.target.value === "permiso") {
+      cedulaNum.disabled = false;
+      setTipoId("permiso");
+      setNumCedula("");
+      cedulaNum.placeholder = "0000-00000000";
     }
   };
 
@@ -252,16 +299,25 @@ function App() {
               <option value="" disabled selected>
                 Tipo de Cédula
               </option>
-              <option value="nacional">Cédula de identidad</option>
+              <option value="nacional">Cédula física</option>
               <option value="dimex">DIMEX</option>
+              <option value="permiso">Permiso laboral</option>
             </select>
           </div>
           <input
             type="text"
+            value={numCedula}
             className="form-control"
             id="text-cedula-number"
             onChange={handleInputNumCedula}
+            placeholder="Primero seleccione el tipo de cédula"
+            disabled
           />
+          {formatId && (
+            <p className="p-0 m-0 text-success text-center">
+              Formato de cédula válido
+            </p>
+          )}
           <button
             type="button"
             className="btn btn-warning"
@@ -273,7 +329,7 @@ function App() {
             <div className="overlay2">
               <div className="modal-container2">
                 <div className="modal-header2">
-                  <h3>Firma</h3>
+                  <h3>Firma:</h3>
                 </div>
                 <button
                   type="button"
