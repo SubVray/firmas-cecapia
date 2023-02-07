@@ -73,7 +73,6 @@ label {
   top: 0;
   width: 100vw;
   z-index: 10000;
-  align-items: center;
   justify-content: center;
 }
 
