@@ -32,42 +32,39 @@ function App() {
   const [photoAdd, setPhotoAdd] = useState("");
   const [tipoId, setTipoId] = useState(null);
   const [formatId, setFormatId] = useState(false);
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: { exact: "environment" },
+  };
 
   window.addEventListener("load", function () {});
 
-  if (stateModal === true) {
+  if (stateModal === true && stateModal2 === false) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "auto";
   }
-  if (stateModal2 === true) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
-    const videoConstraints = {
-      width: 1280,
-      height: 720,
-      facingMode: { exact: "environment" },
-    };
 
-    if (isMobile) {
-      console.log("Estás en un dispositivo móvil");
-      setCamera(videoConstraints);
-    } else {
-      console.log("Estás en un PC");
-      const videoConstraints = {
-        width: 1280,
-        height: 720,
-        facingMode: "user",
-      };
+    // if (isMobile) {
+    //   console.log("Estás en un dispositivo móvil");
+    //   setCamera(videoConstraints);
+    // } else {
+    //   console.log("Estás en un PC");
+    //   const videoConstraints = {
+    //     width: 1280,
+    //     height: 720,
+    //     facingMode: "user",
+    //   };
 
-      setCamera(videoConstraints);
-    }
+    //   setCamera(videoConstraints);
+    // }
   }
+
   const saveImage = () => {
     const signature = signatureCanvas.current
       .getTrimmedCanvas()
@@ -380,7 +377,7 @@ function App() {
             type="button"
             id="btn-send-photos"
             onClick={detectDeviceType}
-            className="btn btn-primary">
+            className="btn btn-primary mt-2">
             Subir fotos de la cédula
           </button>
           <div className=" d-flex gap-2">
