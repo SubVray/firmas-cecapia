@@ -13,6 +13,8 @@ import "react-image-crop/dist/ReactCrop.css";
 const MySwal = withReactContent(Swal);
 
 function App() {
+
+
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -25,10 +27,15 @@ function App() {
   const [firma, setFirma] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
-  const [crop, setCrop] = useState();
+  const [crop, setCrop] = useState({ aspect: 16 / 9 });
   const [stateModal, setStateModal] = useState(false);
   const [photoAdd, setPhotoAdd] = useState("");
 
+
+
+  if(stateModal === true) {
+    document.body.style.overflow = "hidden";
+  }
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
     const videoConstraints = {
@@ -117,6 +124,7 @@ function App() {
     document.getElementById("btn-camara-back").classList.add("d-none");
     document.getElementById("btn-send-photos").classList.remove("d-none");
   };
+
   const handleSendCecapia = async () => {
     const user = {
       phoneNumber: phoneNumber,
@@ -273,6 +281,7 @@ function App() {
           </button>
         </div>
       </form>
+
       {stateModal && (
         <div className="overlay">
           <div className="modal-container">
@@ -296,10 +305,11 @@ function App() {
                     alt=""
                     className="rounded"
                     width={350}
-                    height={'auto'}
+                    height={"auto"}
                   />
                 </ReactCrop>
               </div>
+
             </div>
           </div>
         </div>
