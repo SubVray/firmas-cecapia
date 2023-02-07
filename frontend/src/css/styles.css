@@ -67,7 +67,7 @@ label {
   display: flex;
   height: 100vh;
   left: 0;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 20px 0;
   position: fixed;
   top: 0;
@@ -87,7 +87,7 @@ label {
   position: relative;
   width: 100%;
   overflow-y: auto;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .modal-header {
