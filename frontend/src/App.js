@@ -49,16 +49,22 @@ function App() {
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
     const videoConstraints = {
+      width: 1280,
+      height: 720,
       facingMode: { exact: "environment" },
     };
+
     if (isMobile) {
       console.log("Estás en un dispositivo móvil");
       setCamera(videoConstraints);
     } else {
       console.log("Estás en un PC");
       const videoConstraints = {
+        width: 1280,
+        height: 720,
         facingMode: "user",
       };
+
       setCamera(videoConstraints);
     }
   }
