@@ -296,7 +296,7 @@ function App() {
                     alt=""
                     className="rounded"
                     width={350}
-                    height={250}
+                    height={'auto'}
                   />
                 </ReactCrop>
               </div>
