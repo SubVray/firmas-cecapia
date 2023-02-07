@@ -5,9 +5,10 @@ import Webcam from "react-webcam";
 import Swal from "sweetalert2";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
-import ReactDOM from "react-dom";
-import Cropper from "react-easy-crop";
+// ////////////////////////////////////////////////
 
 const MySwal = withReactContent(Swal);
 
@@ -24,11 +25,8 @@ function App() {
   const [firma, setFirma] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels);
-  }, []);
+
+  const [crop, setCrop] = useState();
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
@@ -276,29 +274,9 @@ function App() {
       </div>
       <div className="border f">
         <div className="crop-container">
-          <Cropper
-            image={frontImg}
-            crop={crop}
-            zoom={zoom}
-            aspect={5 / 3}
-            onCropChange={setCrop}
-            onCropComplete={onCropComplete}
-            onZoomChange={setZoom}
-          />
-        </div>
-        <div className="controls">
-          <input
-            type="range"
-            value={zoom}
-            min={1}
-            max={3}
-            step={0.1}
-            aria-labelledby="Zoom"
-            onChange={(e) => {
-              setZoom(e.target.value);
-            }}
-            className="zoom-range"
-          />
+          <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
+            <img src={frontImg} />
+          </ReactCrop>
         </div>
       </div>
     </div>
