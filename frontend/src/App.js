@@ -25,8 +25,9 @@ function App() {
   const [firma, setFirma] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
-
   const [crop, setCrop] = useState();
+  const [stateModal, setStateModal] = useState(false);
+  const [photoAdd, setPhotoAdd] = useState("");
 
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
@@ -75,6 +76,7 @@ function App() {
 
       if (!isBack) {
         setFrontImg(compressedImage);
+        setPhotoAdd(compressedImage);
         setIsBack(true);
         MySwal.fire({
           title: "success",
@@ -84,11 +86,13 @@ function App() {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Entendido",
         }).then(() => {
+          setStateModal(true);
           document.getElementById("switch-button").click();
         });
       } else {
         setIsBack(false);
         setBackImg(compressedImage);
+        setPhotoAdd(compressedImage);
         Swal.fire({
           title: "success",
           text: "Foto posterior exitosa!",
@@ -97,6 +101,7 @@ function App() {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Entendido",
         }).then(() => {
+          setStateModal(true);
           document.getElementById("section-cedula").classList.add("d-none");
           document.getElementById("btn-send-photos").classList.add("d-none");
           document
@@ -268,16 +273,41 @@ function App() {
           </button>
         </div>
       </form>
+      {stateModal && (
+        <div className="overlay">
+          <div className="modal-container">
+            <div className="modal-header">
+              <h3>Recortar foto de la Cedula</h3>
+            </div>
+            <button
+              type="button"
+              className="btn-close-modal"
+              onClick={() => {
+                setStateModal(false);
+              }}>
+              <span>❌</span>
+            </button>
+            <div className="modal-body">
+              <p>⚠️ Para recortar la imagen seleccione la Cedula ⚠️</p>
+              <div className="crop-container">
+                <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
+                  <img
+                    src={photoAdd}
+                    alt=""
+                    className="rounded"
+                    width={350}
+                    height={250}
+                  />
+                </ReactCrop>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="my-3 d-flex gap-2">
         <img src={frontImg} id="img1" className="w-25" alt="" />
         <img src={backImg} id="img2" className="w-25" alt="" />
-      </div>
-      <div className="border f">
-        <div className="crop-container">
-          <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
-            <img src={frontImg} />
-          </ReactCrop>
-        </div>
       </div>
     </div>
   );
