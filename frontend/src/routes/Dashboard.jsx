@@ -6,13 +6,21 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { SyncLoader } from "react-spinners";
+
 export default function DashBoard() {
   const MySwal = withReactContent(Swal);
   const [allUsers, setAllUsers] = useState([]);
   const [usersTable, setUsersTable] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  let [color, setColor] = useState("#fbbf13");
+
   window.addEventListener("load", function () {
-    getUser();
+    setTimeout(() => {
+      getUser();
+      setIsLoading(false);
+    }, 2000);
   });
 
   const getUser = async () => {
@@ -69,7 +77,10 @@ export default function DashBoard() {
   };
 
   useEffect(() => {
-    getUser();
+    setTimeout(() => {
+      getUser();
+      setIsLoading(false);
+    }, 1000);
   }, []);
 
   const handleDownloadFirma = (user) => {
@@ -82,6 +93,7 @@ export default function DashBoard() {
     link.click();
     document.body.removeChild(link);
   };
+
   const handleDownloadFrontal = (user) => {
     const photoFirma = user.firma;
 
@@ -97,6 +109,7 @@ export default function DashBoard() {
     setBusqueda(e.target.value);
     filter(e.target.value);
   };
+
   const filter = (terminoBusqueda) => {
     let resultadoBusqueda = usersTable.filter((elemento) => {
       if (
@@ -147,7 +160,19 @@ export default function DashBoard() {
             </tr>
           </thead>
           <tbody>
-            {allUsers &&
+            {isLoading ? (
+              <div className="spinner-container">
+                <SyncLoader
+                  color={color}
+                  loading={isLoading}
+                  size={20}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+                <span>Cargando</span>
+              </div>
+            ) : (
+              allUsers &&
               allUsers.map((user, idx) => {
                 return (
                   <tr key={user._id}>
@@ -211,7 +236,8 @@ export default function DashBoard() {
                     </td>
                   </tr>
                 );
-              })}
+              })
+            )}
           </tbody>
         </table>
       </section>

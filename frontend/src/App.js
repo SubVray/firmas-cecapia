@@ -35,6 +35,8 @@ function App() {
   const [photoAdd, setPhotoAdd] = useState("");
   const [tipoId, setTipoId] = useState(null);
   const [formatId, setFormatId] = useState(false);
+  const [phoneNum, setPhoneNum] = useState("");
+  const [savedSign, setSavedSign] = useState(false);
 
   window.addEventListener("load", function () {});
   if (stateModal === true) {
@@ -81,6 +83,8 @@ function App() {
       confirmButtonColor: "#3085d6",
       confirmButtonText: "Entendido",
       timer: 3000,
+    }).then(() => {
+      setSavedSign(true);
     });
   };
   const deleteFirma = () => {
@@ -228,7 +232,17 @@ function App() {
   };
 
   const handleInputPhoneNumber = (event) => {
-    setPhoneNumber(event.target.value);
+    let value = event.target.value;
+    value = value.replace(/[^\d]/g, "");
+    if (value.length > 4) {
+      value = value.slice(0, 4) + " " + value.slice(4);
+    }
+
+    setPhoneNumber(value);
+    setPhoneNum(value);
+    if (phoneNum.length === 8) {
+      document.activeElement.blur();
+    }
   };
 
   const handleRecortar = async () => {
@@ -363,6 +377,7 @@ function App() {
             type="text"
             onChange={handleInputPhoneNumber}
             className="form-control"
+            value={phoneNum}
             id="text-phone-number"
           />
           <div className=" d-flex justify-content-start align-items-center gap-1">
@@ -401,6 +416,9 @@ function App() {
             onClick={() => setStateModal2(true)}>
             Firmar
           </button>
+          {savedSign && (
+            <p className="p-0 m-0 text-success text-center">Firma guardada</p>
+          )}
           {/* modal firma */}
           {stateModal2 && (
             <div className="overlay2">
