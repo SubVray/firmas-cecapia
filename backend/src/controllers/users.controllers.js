@@ -32,4 +32,9 @@ userControl.userRegister = async (req, res) => {
   }
 };
 
+userControl.deleteUser = async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
+  res.json({ message: "User deleted" });
+};
+
 module.exports = userControl;

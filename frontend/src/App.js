@@ -1,3 +1,4 @@
+import "../src/css/styles.css";
 import SignatureCanvas from "react-signature-canvas";
 import logo from "./cecapia.jpg";
 import React, { useRef, useState } from "react";
@@ -300,8 +301,8 @@ function App() {
   };
 
   return (
-    <div className="">
-      <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto mt-3 pt-3 ">
+    <div class="d-flex justify-content-center align-items-center p-1 vw-100">
+      <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto mt-3 pt-3 form-f ">
         <div className="logo-container">
           <img src={logo} alt="Logo" width={"250px"} />
         </div>

@@ -1,0 +1,45 @@
+.logo-container-dash img {
+  border-radius: 5px;
+  width: 250px;
+}
+
+thead th {
+  text-align: center;
+}
+thead th:nth-child(1) {
+  width: 50px;
+}
+thead th:nth-child(2) {
+  width: 150px;
+}
+thead th:nth-child(3) {
+  width: 210px;
+}
+thead th:nth-child(4) {
+  width: 210px;
+}
+thead th:nth-child(5) {
+  width: 210px;
+}
+thead th:nth-child(6) {
+  width: 210px;
+}
+thead th:nth-child(7) {
+  width: 10px;
+}
+
+td {
+  font-size: 18px;
+  padding: 5px !important;
+  position: relative;
+  text-align: center;
+}
+
+td span {
+  width: 100%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
