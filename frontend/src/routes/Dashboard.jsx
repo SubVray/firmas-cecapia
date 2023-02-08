@@ -21,8 +21,7 @@ export default function DashBoard() {
       })
       .catch((error) => console.log(error));
   };
-  const handleDeleteUser = async (e, userID) => {
-    e.preventDefault();
+  const handleDeleteUser = async (userID) => {
     await axios.delete(
       `https://firmas-cecapia-gd2z.vercel.app/api/user/delete/${userID}`
     );
@@ -168,8 +167,8 @@ export default function DashBoard() {
                       <span>
                         <button
                           className="btn btn-danger btn"
-                          onClick={(e) => {
-                            handleDeleteUser(e,user._id);
+                          onClick={() => {
+                            handleDeleteUser(user._id);
                           }}>
                           <FontAwesomeIcon icon={faTrashCan} />
                         </button>

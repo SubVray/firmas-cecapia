@@ -51,8 +51,6 @@ function App() {
   }
 
   function detectDeviceType() {
-    document.getElementById("section-cedula").classList.toggle("d-none");
-
     if (isMobile) {
       console.log("Estás en un dispositivo móvil");
       setCamera(videoConstraints);
@@ -152,7 +150,6 @@ function App() {
       frontImg: frontImg,
       backImg: backImg,
     };
-    console.log(user);
     await axios
       .post("https://firmas-cecapia-gd2z.vercel.app/api/user/register", user)
       .then((data) => {
@@ -399,7 +396,12 @@ function App() {
           <button
             type="button"
             id="btn-send-photos"
-            onClick={detectDeviceType}
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("section-cedula")
+                .classList.toggle("d-none");
+            }}
             className="btn btn-primary mt-2">
             Subir fotos de la cédula
           </button>
