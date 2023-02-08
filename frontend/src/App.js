@@ -215,6 +215,9 @@ function App() {
   };
 
   const handleInputNumCedula = (event) => {
+    if ((event.target.value < 1)) {
+      setFormatId(false);
+    }
     if (tipoId === "nacional") {
       let value = event.target.value;
       value = value.replace(/[^\d]/g, "");

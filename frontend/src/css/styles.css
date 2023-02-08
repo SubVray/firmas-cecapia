@@ -88,7 +88,7 @@ label {
   position: relative;
   width: 100%;
   overflow-y: auto;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 @media (min-width: 992px) {
