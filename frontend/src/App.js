@@ -31,11 +31,11 @@ function App() {
   const [numCedula, setNumCedula] = useState("");
   const [crop, setCrop] = useState({
     aspect: 16 / 9,
-    unit: "%",
+    unit: "px",
     x: 0,
     y: 0,
-    width: 250,
-    height: 150,
+    width: 350,
+    height: 250,
   });
   const [stateModal, setStateModal] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
