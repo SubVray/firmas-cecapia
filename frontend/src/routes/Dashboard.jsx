@@ -22,10 +22,15 @@ export default function DashBoard() {
       .catch((error) => console.log(error));
   };
   const handleDeleteUser = async (userID) => {
-    await axios.delete(
-      `https://firmas-cecapia-gd2z.vercel.app/api/user/delete/${userID}`
-    );
-    window.location.reload();
+    try {
+      await axios.delete(
+        `https://firmas-cecapia-gd2z.vercel.app/api/user/delete/${userID}`
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      // agregue aquí su manejo de errores personalizado
+    }
   };
 
   useEffect(() => {

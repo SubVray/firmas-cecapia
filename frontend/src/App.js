@@ -8,6 +8,8 @@ import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 // ////////////////////////////////////////////////
 
@@ -298,7 +300,7 @@ function App() {
   };
 
   return (
-    <div class="d-flex justify-content-center align-items-center p-1 vw-100">
+    <div class="d-flex justify-content-center align-items-center p-1 vw-100 flex-column">
       <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto mt-3 pt-3 form-f ">
         <div className="logo-container">
           <img src={logo} alt="Logo" width={"250px"} />
@@ -405,7 +407,7 @@ function App() {
             className="btn btn-primary mt-2">
             Subir fotos de la cédula
           </button>
-          <div className=" d-flex gap-2">
+          <div className=" d-flex gap-2 mt-2 py-2">
             <button
               type="button"
               id="btn-send-cecapia"
@@ -418,7 +420,7 @@ function App() {
               id="btn-camara-back"
               onClick={handleCamBack}
               className="btn btn-dark d-none">
-              📷
+              <FontAwesomeIcon icon={faCamera} />
             </button>
           </div>
         </div>
@@ -457,7 +459,10 @@ function App() {
           </button>
         </div>
       </form>
-
+      <div className="my-3 d-flex gap-2">
+        <img src={frontImg} id="img1" className="w-50" alt="" />
+        <img src={backImg} id="img2" className="w-50" alt="" />
+      </div>
       {stateModal && (
         <div className="overlay">
           <div className="modal-container ">
@@ -495,11 +500,6 @@ function App() {
           </div>
         </div>
       )}
-
-      <div className="my-3 d-flex gap-2">
-        <img src={frontImg} id="img1" className="w-25" alt="" />
-        <img src={backImg} id="img2" className="w-25" alt="" />
-      </div>
     </div>
   );
 }

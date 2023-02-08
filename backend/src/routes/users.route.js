@@ -24,7 +24,7 @@ router.get("/user/:id", async (req, res) => {
   res.json(user);
 });
 router.delete("/user/delete/:id", async (req, res) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const user = await User.findByIdAndDelete({ _id: req.params.id });
   res.json(user);
   res.json({ message: "User deleted" });
 });
