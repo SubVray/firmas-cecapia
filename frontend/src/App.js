@@ -35,11 +35,6 @@ function App() {
   const [photoAdd, setPhotoAdd] = useState("");
   const [tipoId, setTipoId] = useState(null);
   const [formatId, setFormatId] = useState(false);
-  const videoConstraints = {
-    width: 1280,
-    height: 720,
-    facingMode: { exact: "environment" },
-  };
 
   window.addEventListener("load", function () {
     detectDeviceType();
@@ -55,6 +50,11 @@ function App() {
   function detectDeviceType() {
     if (isMobile) {
       console.log("Estás en un dispositivo móvil");
+      const videoConstraints = {
+        width: 1280,
+        height: 720,
+        facingMode: { exact: "environment" },
+      };
       setCamera(videoConstraints);
     } else {
       console.log("Estás en un PC");
@@ -191,7 +191,7 @@ function App() {
     if (input1.value !== "" && input2.value !== "") {
       validate = true;
     }
-    
+
     if (validate === true) {
       const user = {
         phoneNumber: phoneNumber,
