@@ -48,23 +48,22 @@ function App() {
     document.body.style.overflow = "auto";
   }
 
-
   function detectDeviceType() {
     document.getElementById("section-cedula").classList.toggle("d-none");
 
-    // if (isMobile) {
-    //   console.log("Estás en un dispositivo móvil");
-    //   setCamera(videoConstraints);
-    // } else {
-    //   console.log("Estás en un PC");
-    //   const videoConstraints = {
-    //     width: 1280,
-    //     height: 720,
-    //     facingMode: "user",
-    //   };
+    if (isMobile) {
+      console.log("Estás en un dispositivo móvil");
+      setCamera(videoConstraints);
+    } else {
+      console.log("Estás en un PC");
+      const videoConstraints = {
+        width: 1280,
+        height: 720,
+        facingMode: "user",
+      };
 
-    //   setCamera(videoConstraints);
-    // }
+      setCamera(videoConstraints);
+    }
   }
 
   const saveImage = () => {
@@ -451,6 +450,12 @@ function App() {
             </button>
             <div className="modal-body">
               <p>⚠️ Para recortar la imagen seleccione la Cedula ⚠️</p>
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleRecortar}>
+                Recortar
+              </button>
               <div className="crop-container">
                 <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
                   <img
@@ -462,12 +467,6 @@ function App() {
                   />
                 </ReactCrop>
               </div>
-              <button
-                type="button"
-                className="btn btn-success"
-                onClick={handleRecortar}>
-                Recortar
-              </button>
             </div>
           </div>
         </div>
