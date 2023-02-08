@@ -36,9 +36,7 @@ function App() {
   const [tipoId, setTipoId] = useState(null);
   const [formatId, setFormatId] = useState(false);
 
-  window.addEventListener("load", function () {
-    detectDeviceType();
-  });
+  window.addEventListener("load", function () {});
   if (stateModal === true) {
     document.body.style.overflow = "hidden";
   } else if (stateModal2 === true) {
@@ -61,7 +59,7 @@ function App() {
       const videoConstraints = {
         width: 1280,
         height: 720,
-        facingMode: { exact: "environment" },
+        facingMode: "user",
       };
 
       setCamera(videoConstraints);
@@ -457,6 +455,7 @@ function App() {
               document
                 .getElementById("section-cedula")
                 .classList.toggle("d-none");
+              detectDeviceType();
             }}
             className="btn btn-primary mt-2">
             Subir fotos de la cédula
