@@ -29,7 +29,14 @@ function App() {
   const [firma, setFirma] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [numCedula, setNumCedula] = useState("");
-  const [crop, setCrop] = useState({ aspect: 16 / 9 });
+  const [crop, setCrop] = useState({
+    aspect: 16 / 9,
+    unit: "%",
+    x: 0,
+    y: 0,
+    width: 350,
+    height: 250,
+  });
   const [stateModal, setStateModal] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
   const [photoAdd, setPhotoAdd] = useState("");
@@ -557,10 +564,14 @@ function App() {
                 Recortar
               </button>
               <div className="crop-container">
-                <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
+                <ReactCrop
+                  crop={crop}
+                  ruleOfThirds
+                  onChange={(c) => setCrop(c)}>
                   <img
                     src={photoAdd}
                     alt=""
+                    ruleOfThirds
                     className="rounded"
                     width={350}
                     height={"auto"}
