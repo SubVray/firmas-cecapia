@@ -35,7 +35,7 @@ function App() {
     x: 0,
     y: 0,
     width: 350,
-    height: 250,
+    height: 230,
   });
   const [stateModal, setStateModal] = useState(false);
   const [stateModal2, setStateModal2] = useState(false);
