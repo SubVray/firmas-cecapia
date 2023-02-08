@@ -82,6 +82,7 @@ function App() {
       showCancelButton: false,
       confirmButtonColor: "#3085d6",
       confirmButtonText: "Entendido",
+      timer: 3000,
     });
   };
   const deleteFirma = () => {
@@ -145,36 +146,87 @@ function App() {
   };
 
   const handleSendCecapia = async () => {
-    const user = {
-      phoneNumber: phoneNumber,
-      numCedula: numCedula,
-      firma: firma,
-      frontImg: frontImg,
-      backImg: backImg,
-    };
-    await axios
-      .post("https://firmas-cecapia-gd2z.vercel.app/api/user/register", user)
-      .then((data) => {
-        MySwal.fire({
-          title: "success",
-          text: `${data}`,
-          icon: "success",
-          showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "Entendido",
-        });
-        console.log(data);
-      })
-      .catch((err) => {
+    document.getElementById("btn-send-cecapia").textContent = "Enviando...";
+    const input1 = document.querySelector("#text-phone-number");
+    const input2 = document.querySelector("#text-cedula-number");
+    let validate = false;
+    if (input1.value === "") {
+      input1.classList.add("is-invalid");
+      setTimeout(() => {
+        document.getElementById("btn-send-cecapia").textContent =
+          "Enviar a Cecapia";
         MySwal.fire({
           title: "error",
-          text: `${err}`,
-          icon: "success",
+          text: `Revise que la información solicitada este completa, revise que todos los campos estén completos`,
+          icon: "warning",
           showCancelButton: false,
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Entendido",
         });
-      });
+      }, 1000);
+      validate = false;
+    } else {
+      input1.classList.remove("is-invalid");
+      input1.classList.add("is-valid");
+    }
+    if (input2.value === "") {
+      input2.classList.add("is-invalid");
+      setTimeout(() => {
+        document.getElementById("btn-send-cecapia").textContent =
+          "Enviar a Cecapia";
+        MySwal.fire({
+          title: "error",
+          text: `Revise que la información solicitada este completa, revise que todos los campos estén completos`,
+          icon: "warning",
+          showCancelButton: false,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Entendido",
+        });
+      }, 1000);
+      validate = false;
+    } else {
+      input2.classList.remove("is-invalid");
+      input2.classList.add("is-valid");
+    }
+    if (input1.value !== "" && input2.value !== "") {
+      validate = true;
+    }
+    
+    if (validate === true) {
+      const user = {
+        phoneNumber: phoneNumber,
+        numCedula: numCedula,
+        firma: firma,
+        frontImg: frontImg,
+        backImg: backImg,
+      };
+      await axios
+        .post("https://firmas-cecapia-gd2z.vercel.app/api/user/register", user)
+        .then((data) => {
+          MySwal.fire({
+            title: "Datos enviados correctamente",
+            text: `Pronto nos pondremos en contacto.`,
+            icon: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Entendido",
+          }).then(() => {
+            window.location.reload();
+          });
+        })
+        .catch((err) => {
+          document.getElementById("btn-send-cecapia").textContent =
+            "Enviar a Cecapia";
+          MySwal.fire({
+            title: "error",
+            text: `Revise que la información solicitada este completa, revise que todos los campos estén completos`,
+            icon: "warning",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Entendido",
+          });
+        });
+    }
   };
 
   const handleInputPhoneNumber = (event) => {
@@ -208,6 +260,7 @@ function App() {
         showCancelButton: false,
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Entendido",
+        timer: 1000,
       });
     } else {
       MySwal.fire({
@@ -217,6 +270,7 @@ function App() {
         showCancelButton: false,
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Entendido",
+        timer: 1000,
       });
     }
 
@@ -300,7 +354,7 @@ function App() {
   };
 
   return (
-    <div class="d-flex justify-content-center align-items-center p-1 vw-100 flex-column">
+    <div class="d-flex justify-content-center align-items-center p-1  flex-column user-re ">
       <form className="form-control d-flex justify-content-center align-items-center flex-column m-auto mt-3 pt-3 form-f ">
         <div className="logo-container">
           <img src={logo} alt="Logo" width={"250px"} />
