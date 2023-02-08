@@ -1,6 +1,6 @@
 import SignatureCanvas from "react-signature-canvas";
 import logo from "./cecapia.jpg";
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -38,8 +38,9 @@ function App() {
     facingMode: { exact: "environment" },
   };
 
-  window.addEventListener("load", function () {});
-
+  window.addEventListener("load", function () {
+    detectDeviceType();
+  });
   if (stateModal === true) {
     document.body.style.overflow = "hidden";
   } else if (stateModal2 === true) {
@@ -106,25 +107,23 @@ function App() {
       if (!isBack) {
         setPhotoAdd(compressedImage);
         MySwal.fire({
-          title: "success",
-          text: "Foto frontal exitosa!",
-          icon: "success",
+          title: "Recorte la imagen",
+          text: "",
           showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "Entendido",
+          showConfirmButton: false,
+          timer: 1,
         }).then(() => {
           setStateModal(true);
           document.getElementById("switch-button").click();
         });
       } else {
         setPhotoAdd(compressedImage);
-        Swal.fire({
-          title: "success",
-          text: "Foto posterior exitosa!",
-          icon: "success",
+        MySwal.fire({
+          title: "Recorte la imagen",
+          text: "",
           showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "Entendido",
+          showConfirmButton: false,
+          timer: 1,
         }).then(() => {
           setStateModal(true);
           document.getElementById("section-cedula").classList.add("d-none");
@@ -201,6 +200,25 @@ function App() {
       crop.width,
       crop.height
     );
+    if (!isBack) {
+      MySwal.fire({
+        title: "Foto frontal exitosa!",
+        text: "",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
+    } else {
+      MySwal.fire({
+        title: "Foto trasera exitosa!",
+        text: "",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
+    }
 
     const base64Image = await canvas.toDataURL("image/jpeg");
     if (!isBack) {
@@ -215,7 +233,7 @@ function App() {
   };
 
   const handleInputNumCedula = (event) => {
-    if ((event.target.value < 1)) {
+    if (event.target.value < 1) {
       setFormatId(false);
     }
     if (tipoId === "nacional") {
