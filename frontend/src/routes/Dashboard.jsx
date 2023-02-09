@@ -20,7 +20,7 @@ export default function DashBoard() {
     setTimeout(() => {
       getUser();
       setIsLoading(false);
-    }, 2000);
+    }, 3000);
   });
 
   const getUser = async () => {
